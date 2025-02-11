@@ -4,15 +4,15 @@
 ## Questions upfront
 * Can we leverage the existing cloud infrastructure from Amazon, Microsoft, or Google, or we are focusing on inventing them by ourselves?
   - We could expect to hear that we can leverage, because it's unrealistic for most of the companies.
-* Cost optimization on CDN level
+* [Cost optimization on CDN level](Youtube-Netflix-Hulu.md#cost-optimizations)
   - Definitely worth to discuss because it costs a lot.
 
 ## Functiona moments and Requirements
-* Video uploading flow
+* [Video uploading flow](Youtube-Netflix-Hulu.md#video-uploading-flow)
   - (Optional) Recommendation system based on your preferences (immediate changes, scheduled changes)
   - bitrates & transcoding questions
 
-* Video streaming flow
+* [Video streaming flow](Youtube-Netflix-Hulu.md#video-streaming)
   - (Optional) Prepared set of 100 videos on the main screen
   - (Optional) Offline streaming?
   - Switching between bitrate for smooth user experience?
@@ -117,6 +117,7 @@ Is the final output of the encoding pipeline.
 * Microsoft Smooth Streaming
 * Adobe Http Dynamic Streaming (HDS)
 
+## Cost Optimizations
 Recommendation: They all support different video encodings. You have to choose the right streaming protocol for your business case. 
 
 Naive video streaming diagram:  
