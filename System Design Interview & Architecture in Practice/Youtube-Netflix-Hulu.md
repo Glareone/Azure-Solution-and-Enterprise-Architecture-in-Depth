@@ -16,7 +16,7 @@
   - (Optional) Prepared set of 100 videos on the main screen
   - (Optional) Offline streaming?
   - Switching between bitrate for smooth user experience?
-* (Optional, it leads us to another system design) Live streaming: It refers to the process of how a video is recorded and broadcasted in real time.
+* (Optional, it leads us to another system design) [Live streaming](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice/live-streaming.md): It refers to the process of how a video is recorded and broadcasted in real time.
 The notable differences are:
   - Live streaming has a higher latency requirement, so it might need a different streaming protocol.
   - Live streaming has a lower requirement for parallelism because small chunks of data are already processed in real-time.
