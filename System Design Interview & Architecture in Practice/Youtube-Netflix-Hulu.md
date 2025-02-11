@@ -117,8 +117,14 @@ Is the final output of the encoding pipeline.
 * Microsoft Smooth Streaming
 * Adobe Http Dynamic Streaming (HDS)
 
-## Cost Optimizations
-Recommendation: They all support different video encodings. You have to choose the right streaming protocol for your business case. 
-
 Naive video streaming diagram:  
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/9e4bfb78-0a12-4e63-8a1a-c0f93bc6d1ff" />
+
+Recommendation: They all support different video encodings. You have to choose the right streaming protocol for your business case. 
+
+## Cost Optimizations
+* For less popular content, we may not need to store many encoded video versions. Short videos can be encoded on-demand.
+* Some videos are popular only in certain regions. There is no need to distribute these videos to other regions.
+* Build your own CDN like Netflix and partner with Internet Service Providers (ISPs). Building your CDN is a giant project; however, this could make sense for large streaming companies. An ISP can be Comcast, AT&T, Verizon, or other internet providers. 
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/3e7cf93e-9cb4-4efa-a314-93b825abfddf" />
+
