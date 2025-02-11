@@ -16,6 +16,12 @@
   - (Optional) Prepared set of 100 videos on the main screen
   - (Optional) Offline streaming?
   - Switching between bitrate for smooth user experience?
+* (Optional, it leads us to another system design) Live streaming: It refers to the process of how a video is recorded and broadcasted in real time.
+The notable differences are:
+  - Live streaming has a higher latency requirement, so it might need a different streaming protocol.
+  - Live streaming has a lower requirement for parallelism because small chunks of data are already processed in real-time.
+  - Live streaming requires different sets of error handling. Any error handling that takes too much time is not acceptable.
+
 
 ## Non-Functional Requirements
 * Ability to upload videos fast
