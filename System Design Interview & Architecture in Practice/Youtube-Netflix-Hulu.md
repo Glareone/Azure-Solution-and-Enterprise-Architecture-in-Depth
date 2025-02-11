@@ -1,9 +1,18 @@
 # Designing Youtube | Netflix | Hulu
 <img width="985" alt="image" src="https://github.com/user-attachments/assets/f421d9ee-8250-4325-8bfd-8f299c7ce4d6" />
 
+## Questions upfront
+* Can we leverage the existing cloud infrastructure from Amazon, Microsoft, or Google, or we are focusing on inventing them by ourselves?
+  - We could expect to hear that we can leverage, because it's unrealistic for most of the companies.
+* Cost optimization on CDN level
+  - Definitely worth to discuss because it costs a lot.
+
 ## Functiona moments and Requirements
 * Video uploading flow
 * Video streaming flow
+* (Optional) Recommendation system based on your preferences (immediate changes, scheduled changes)
+* (Optional) Prepared set of 100 videos on the main screen
+* (Optional) Offline streaming?
 
 ## Non-Functional Requirements
 * Ability to upload videos fast
@@ -23,8 +32,7 @@
 * When cloud CDN serves a video, you are charged for data transferred out of the
 
 ### CDN. Discussing how to reduce the cost of CDN might be very important on the interview
-* Let us use Amazon’s CDN CloudFront for cost estimation (Figure 14-2) [3]. Assume
-100% of traffic is served from the United States. The average cost per GB is $0.02.
+* Let us use Amazon’s CDN CloudFront for cost estimation. Assume 100% of traffic is served from the United States. The average cost per GB is $0.02.
 For simplicity, we only calculate the cost of video streaming.
 * 5 million * 5 videos * 0.3GB * $0.02 = $150,000 per day.
 
@@ -54,3 +62,15 @@ from the CDN.
 completion events.
 * Completion handler: This consists of a list of workers that pull event data from the
 completion queue and update metadata cache and database.
+
+### Video Streaming
+**Protocols**
+* MPEG-DASH "Moving Picture Experts Group" - "Dynamic Adaptive Streaming over HTTP"
+* Apple HLS. "Http Live Streaming"
+* Microsoft Smooth Streaming
+* Adobe Http Dynamic Streaming (HDS)
+
+Recommendation: They all support different video encodings. You have to choose the right streaming protocol for your business case. 
+
+Naive video streaming diagram:  
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/9e4bfb78-0a12-4e63-8a1a-c0f93bc6d1ff" />
