@@ -9,6 +9,14 @@
 7. [The ADM](#adm-architecture-development-method)
    - [Initial State. Basics](#before-start-initial-state)
    - [Preliminary Step](#adm-preliminary-phase)
+   - [A. Architecture Vision](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-1-A-architecture-vision.md)
+   - [B. Business Architecture](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-2-B-business-architecture.md)
+   - [C. Information Systems Architecture. Data and Application Architecture](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-3-C-Information-systems-architecture.md)
+   - [D. Technology Architecture](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-4-D-technology-architecture.md)
+   - [E. Opportunities and Solutions](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-5-E-opportunities-and-solutions.md)
+   - [F. Migration Planning](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-6-F-migration-planning.md)
+   - [G. Governance](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-7-G-Governance.md)
+   - [H. Architecture Change Management](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-8-H-architecture-change-management.md)
 
 ## Recommended courses:
 https://www.udemy.com/course/togaf10-part1  
