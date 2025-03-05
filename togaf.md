@@ -17,6 +17,11 @@
    - [F. Migration Planning](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-6-F-migration-planning.md)
    - [G. Governance](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-7-G-Governance.md)
    - [H. Architecture Change Management](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/phase-8-H-architecture-change-management.md)
+8. [Guidelines and Techniques of ADM Architecture Development Method](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/ADM-Guidelines-and-Techiniques.md)
+9. [Governance Recommendations](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/Architecture-Governance-Techniques.md)
+10. [Architecture Repository. Best practices](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/Architecture-Repository.md)
+11. [Enterprise Continuum](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/togaf/Enterprise-Continuum.md)
+
 
 ## Recommended courses:
 https://www.udemy.com/course/togaf10-part1  
