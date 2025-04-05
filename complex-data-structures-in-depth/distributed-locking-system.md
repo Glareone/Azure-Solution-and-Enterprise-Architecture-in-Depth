@@ -45,6 +45,16 @@ Distributed consensus using Asynchronous Communication is already solved by `Pax
 ## Naming Resolution Service (DNS-like)
 <img width="794" alt="image" src="https://github.com/user-attachments/assets/a016526a-7ebe-405a-8bd0-f14fda97b633" />
 
+Upon initialization, a Chubby client performs the following steps:
+
+**Find the master to send requests:**
+1) Client contacts the DNS to know the listed Chubby replicas.
+2) Client calls any Chubby server directly via Remote Procedure Call (RPC).
+3) If that replica is not the master, it will return the address of the current master.
+4) Once the master is located, the client maintains a session with it and sends all requests to it until it indicates that it is not the master anymore or stops responding.
+
+![image](https://github.com/user-attachments/assets/0dd0dee8-bac9-4dd6-ae21-1ea1af83df8e)
+
 ## Chubby File System POSIX-like
 
 <img width="790" alt="image" src="https://github.com/user-attachments/assets/01e24602-c696-4c23-9c4f-32257e613880" />
@@ -69,6 +79,12 @@ Example: If multiple processes need to perform complex operations involving mult
 Chubby locks are advisory in nature. This means that Chubby itself does not enforce the locks; it merely provides a mechanism for clients to acquire and release locks and to discover which locks are currently held. It is up to the individual applications to respect the locks and avoid accessing or modifying protected resources while the locks are held by other clients.
 
 **Useful when you need to check who held the lock and what's inside of the locked file (why it's stuck, for instance)**
+
+## Master Elections
+![image](https://github.com/user-attachments/assets/9df0caea-7b95-4d12-9e70-fa3cdc1b6358)
+
+Once the master election starts, all candidates attempt to acquire a Chubby lock on a file associated with the election. Whoever acquires the lock first becomes the master. The master writes its identity on the file, so that other processes know who the is current master.
+
 
 ## When not to use Chubby
 Because of its design choices and proposed usage, Chubby should not be used when:
