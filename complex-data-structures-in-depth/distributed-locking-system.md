@@ -17,12 +17,12 @@ Wide-known problem with lots of hidden road blocks.
 * Replicas: Multiple replica nodes maintain copies of the master's state, providing redundancy and fault tolerance.
 * Paxos Protocol (Consensus): Chubby employs the Paxos protocol for achieving consensus among the replicas. Paxos guarantees that all replicas will eventually agree on the latest state of the system, even in the presence of network failures or node outages.
 
-## Paxos as Consensus Protocol
+## Paxos as Consensus Protocol. Quorum
+Distributed consensus algorithms need a quorum to make a decision, so several replicas are used for high availability. One can view the lock service as a way of providing a generic electorate that allows a client application to make decisions correctly when less than a majority of its own members are up. 
+
 <img width="574" alt="image" src="https://github.com/user-attachments/assets/8106fc6d-80da-41b5-8d11-2fcef9bb3247" />  
 
-Distributed consensus using Asynchronous Communication is already solved by Paxos protocol, and Chubby actually uses Paxos underneath to manage the state of the Chubby system at any point in time.
-
-
+Distributed consensus using Asynchronous Communication is already solved by `Paxos protocol`, and Chubby actually uses Paxos underneath to manage the state of the Chubby system at any point in time.
 
 ## Naming Resolution Service (DNS-like)
 <img width="794" alt="image" src="https://github.com/user-attachments/assets/a016526a-7ebe-405a-8bd0-f14fda97b633" />
@@ -36,6 +36,8 @@ Chubby provides a developer-friendly interface for coarse-grained distributed lo
 
 **Coarse-grained locks**: Control access to larger resources or sections of data. They provide a broader level of synchronization but can lead to reduced concurrency if multiple processes compete for the same lock.
 **Fine-grained locks**: Control access to smaller, more granular resources. They offer higher concurrency but can be more complex to manage and may introduce overhead due to frequent locking and unlocking operations.
+
+Example: If multiple processes need to perform complex operations involving multiple tables in a database, it might be more efficient to acquire a coarse-grained lock on the entire database. This prevents other processes from modifying any data in the database while the operation is in progress, ensuring data integrity and consistency.
 
 ## When not to use Chubby
 Because of its design choices and proposed usage, Chubby should not be used when:
