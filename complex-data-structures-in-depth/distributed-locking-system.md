@@ -3,6 +3,9 @@
 Provide a lease-lock capabilities in Distributed system:  
 Wide-known problem with lots of hidden road blocks.  
 
+## Other related pages
+1. [High-Level Architecture & Design Rationale](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/complex-data-structures-in-depth/distributed-lock-chubby/chubby-high-level-architecture.md)
+
 ## Master-Slave paradigm in Chubby
 * Master-Slave: In a typical master-slave pattern, only the master can process write requests, while slaves passively replicate data from the master.
 * Chubby: In Chubby, both the master and replicas can process read requests. However, only the master can process write requests (acquiring or releasing locks). The replicas use Paxos to synchronize their state with the master and ensure data consistency across the cluster.
