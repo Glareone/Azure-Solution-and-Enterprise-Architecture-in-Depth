@@ -43,6 +43,8 @@ Features:
 5. 10M * 2 uploads / 24h / 3600s = 240 Requests per second on writing. + 240 requests on reading based on ratio. -> 480 Requests/s.
 
 ### Naive implementation to touch basics
+![2025-04-28 22 18 28](https://github.com/user-attachments/assets/bd0b3d90-3e47-4356-a40a-a3896f5c6d5a)
+
 
 1. WebAPI server to upload and download files
 2. Database
