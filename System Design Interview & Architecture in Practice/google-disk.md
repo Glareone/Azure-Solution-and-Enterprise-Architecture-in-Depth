@@ -16,6 +16,7 @@ Features:
 3. Sync files across multiple devices. Added on one device - synced to other devices
 4. Ability to share with friends
 5. Send notifications or subscribe on changes
+6. Resumable upload for larger files (because of potential network interruptions)
 
 ### Non-Functional
 1. Support Mobile and Web app (browser).
@@ -43,7 +44,26 @@ Features:
 5. 10M * 2 uploads / 24h / 3600s = 240 Requests per second on writing. + 240 requests on reading based on ratio. -> 480 Requests/s.
 
 ### Naive implementation to touch basics
+
+**Upload Steps**:
+**Upload URL example with Resumable Parameter**: [https://api.example.com/files/upload?uploadType=resumable](https://api.example.com/files/upload?uploadType=resumable)  
+1) Send the Initial Upload Request to retrieve URL where to upload the file with "resumeable" parameter  
+2) Upload the file and monitor the state  
+3) if upload is interrupted, resume the upload when it's possible (we can use append or blob format for that, Azure Blob Storage, for instance, supports this out of the box)  
+
+**Download Steps**:
+**Download URL example**: [](https://api.example.com/files/download?path=community%2F0001%2FAlex%2Fselected_file.txt&revision=1)
+1) params: **file_path**: "community/Alex/selected_file.txt"
+2) and **filerevisions**: "1"
+
+**Get Revisions(Versions)**:
+**Get Revisions URL example**: [](htttps://api.example.com/files/file-address-and-file-name/revisions?limit=10)
+1) Get revisions history of the file (all changes and file versions)
+2) Parameters: we could place file path into parameters
+3) Revision history limit: 10
+
 ![2025-04-28 22 18 28](https://github.com/user-attachments/assets/bd0b3d90-3e47-4356-a40a-a3896f5c6d5a)
+
 
 
 1. WebAPI server to upload and download files
