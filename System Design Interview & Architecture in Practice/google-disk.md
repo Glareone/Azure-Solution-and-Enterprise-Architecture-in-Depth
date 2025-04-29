@@ -63,14 +63,19 @@ Features:
 3) Revision history limit: 10
 
 ![2025-04-28 22 18 28](https://github.com/user-attachments/assets/bd0b3d90-3e47-4356-a40a-a3896f5c6d5a)
+1) Folder Structure - virtual, we can use virtual routing on File Storage level without applying hierarchy. For hierarchy it's important to make a good justification.
 
 
+---
 
+![2025-04-29 10 07 31](https://github.com/user-attachments/assets/b4717bd5-4ef1-43f1-8f06-a3c59be289e9)
 1. WebAPI server to upload and download files
-2. Database
-   a. To keep files metadata
-   b. Login Info
-   c. Files Info and permissions
-   d. Get File revisions
-4. Blob storage to store files
+2. Database (to store files metadata and level of permissions, whom the file belongs to, etc)  
+   a. To keep files metadata    
+   b. Login Info  
+   c. Files Info and permissions  
+   d. Get File revisions  
+3. Blob storage to store files  
+
+
 
