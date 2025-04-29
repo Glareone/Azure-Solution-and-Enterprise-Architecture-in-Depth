@@ -88,3 +88,11 @@ To Sync the changes between users who make changes in parallel it's required 2 t
 2) Chunking  
    We should operate on the file chunks level. It's acceptable to follow last write wins in this case.
 
+---
+### Work together with one file
+In order to update the one file together with someone we have to establish bi-directional communication line.  
+To do that we need a kind of Session Service (Register user, start editing and receive updates near real-time).  
+
+###Session Server
+Every client first make Registration rpc call to Session server to get the target session server. If not already established then this rpc will allocate a new Session server. Then client establish bi-directional connection to session server.
+<img width="747" alt="Screenshot 2025-04-29 at 10 20 51" src="https://github.com/user-attachments/assets/14755de3-1b11-4880-91c9-8e81515d65bc" />
