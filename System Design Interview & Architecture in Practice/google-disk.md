@@ -14,9 +14,10 @@ Features:
 1. Add Files using drag and drop
 2. Download Files.
 3. Sync files across multiple devices. Added on one device - synced to other devices
-4. Ability to share with friends
-5. Send notifications or subscribe on changes
-6. Resumable upload for larger files (because of potential network interruptions)
+4. Synchronization between users during one session (touched below)
+5. Ability to share with friends
+6. Send notifications or subscribe on changes
+7. Resumable upload for larger files (because of potential network interruptions)
 
 ### Non-Functional
 1. Support Mobile and Web app (browser).
@@ -62,11 +63,11 @@ Features:
 2) Parameters: we could place file path into parameters
 3) Revision history limit: 10
 
+--- 
+### Basics and General Considerations
+
 ![2025-04-28 22 18 28](https://github.com/user-attachments/assets/bd0b3d90-3e47-4356-a40a-a3896f5c6d5a)
 1) Folder Structure - virtual, we can use virtual routing on File Storage level without applying hierarchy. For hierarchy it's important to make a good justification.
-
-
----
 
 ![2025-04-29 10 07 31](https://github.com/user-attachments/assets/b4717bd5-4ef1-43f1-8f06-a3c59be289e9)
 1. WebAPI server to upload and download files
@@ -77,5 +78,13 @@ Features:
    d. Get File revisions  
 3. Blob storage to store files  
 
+---
+### Synchronization challenge
+![2025-04-29 10 12 43](https://github.com/user-attachments/assets/59774b76-3d43-45c8-9cab-350d6a68c36a)
 
+To Sync the changes between users who make changes in parallel it's required 2 things:
+1) Sync Service  
+  Sync Service will process message from Chunk Uploaded Queue . It will look into UserClients table to find out the list of connected clients for the given user. Then it will fanout making call to Session server for each client to notify client.
+2) Chunking  
+   We should operate on the file chunks level. It's acceptable to follow last write wins in this case.
 
