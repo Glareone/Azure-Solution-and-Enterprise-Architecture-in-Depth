@@ -140,3 +140,19 @@ For large groups the system design becomes similar to the group chat. It means y
 1. Timestamp Synchronization: Ensure that timestamps used for ordering are as closely synchronized as possible across clients to avoid inconsistencies.
 2. Handling Edits from Offline Users: Design a strategy to incorporate edits made by offline users while minimizing conflicts (e.g., conflict markers, user-assisted merging).
 
+---
+### Storage & Updates Question
+We sync only delta, which means only modified blocks are transferred to the blob storage. (could be S3 or Azure Blob Storage).
+![IMAGE 2025-05-04 16:23:03](https://github.com/user-attachments/assets/3b538c43-25c7-4aeb-b4f2-4aa5745e94c0)
+
+### High Level of (strong) consistency in Metadata. ACID vs BASE.
+We obviously need to store file's metadata in the database. there are quite complex set of related file information: workspace it belongs to, owner, blocks, file history, etc.
+
+We need to know that our File copy in reality stored on several disks in different racks (at least). If we select another level of replication (LZR, Geo-redundancy, etc) - the number of copies might be larger. So, blob itself has eventual consistency.
+
+Potential DB Metadata Scheme:
+![IMAGE 2025-05-04 16:28:02](https://github.com/user-attachments/assets/42718e83-b2d9-4578-9970-5d3de31d6590)
+
+
+
+
