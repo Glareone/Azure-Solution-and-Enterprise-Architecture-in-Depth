@@ -153,6 +153,25 @@ We need to know that our File copy in reality stored on several disks in differe
 Potential DB Metadata Scheme:
 ![IMAGE 2025-05-04 16:28:02](https://github.com/user-attachments/assets/42718e83-b2d9-4578-9970-5d3de31d6590)
 
+---
+### Notification Service. Long-polling vs Websockets vs Server-side events SSE.
+If we want to notify about file changes - we have to build Notification Service. We have to be wise here. Websockets might be too expensive for devices working on battery. Long-polling consumes less.
 
+**Long Polling vs. SSE:**
 
+| Feature | Long Polling | Server-Sent Events (SSE) |
+| :-- | :-- | :-- |
+| Connection Type | HTTP requests held open | Persistent HTTP connection |
+| Best Scenario | Infrequent updates with a reasonable polling interval |  For near real-time updates, SSE's lower latency would be more suitable | 
+| Latency | Can be higher (depends on polling interval) | Lower (near real-time) |
+| Server Resource Consumption | Can be higher (many open connections) | Lower (efficient use of single connection) |
+| Browser Support | Very wide | Wide, but slightly less than Long Polling |
+| Battery Consumption | Can be higher (frequent reconnections) | Generally lower (fewer reconnections) |
+| Complexity | Simpler to implement | Slightly more complex (event handling) |
+| Network issues handling | Better due to reconnections | Slightly worse |
 
+**Important Optimizations (For Both):**
+
+* Efficient Polling/Heartbeat Intervals: Don't poll or send heartbeats too frequently to conserve battery. Find a balance between update latency and resource usage.
+* Backoff Strategies: Implement exponential backoff for reconnection attempts in case of network errors to avoid aggressive polling.
+* Mobile-Specific Considerations: Explore platform-specific APIs and best practices for managing background network activity on mobile devices to minimize battery drain.
