@@ -93,6 +93,50 @@ To Sync the changes between users who make changes in parallel it's required 2 t
 In order to update the one file together with someone we have to establish bi-directional communication line.  
 To do that we need a kind of Session Service (Register user, start editing and receive updates near real-time).  
 
-###Session Server
-Every client first make Registration rpc call to Session server to get the target session server. If not already established then this rpc will allocate a new Session server. Then client establish bi-directional connection to session server.
-<img width="747" alt="Screenshot 2025-04-29 at 10 20 51" src="https://github.com/user-attachments/assets/14755de3-1b11-4880-91c9-8e81515d65bc" />
+---
+### Small Group
+![image](https://github.com/user-attachments/assets/8a815e31-5c60-49f5-8033-1053076fb30e)
+System for Collaborative Editing (Small Groups):
+
+#### Direct File Update + WebSocket Notifications:
+1. When a user edits a file chunk, immediately update the chunk in blob storage.
+2. Simultaneously, send a WebSocket notification to all other collaborators in the group, informing them about the updated chunk.
+Clients receiving the notification update their local copies accordingly.
+3. Offline Handling: When an offline user reconnects, force a full file download to ensure they have the latest version.
+
+**Strengths:**  
+1. **Simplicity:** This approach reduces complexity by avoiding a separate messaging layer for small groups.  
+2. **Low Latency:** Direct file updates combined with real-time WebSocket notifications minimize the delay experienced by users actively editing the document.  
+3. **Reduced Overhead:** For small groups, the overhead of immediate file updates is manageable, especially if changes are granular (at the chunk level).
+
+**Weaknessess:**
+1. **Scalability Limits**: As the number of simultaneous editors increases, the overhead of constantly updating the blob storage and sending notifications to many clients could become a bottleneck. For large groups, a messaging system (like Kafka) would be more efficient in distributing updates and handling potential bursts of activity.
+2. **Conflict Resolution (Crucial)**:
+Proposal with Websockets and without messaging doesn't address how to handle concurrent edits by multiple users (only last write wins).
+**You'll need a robust conflict resolution mechanism.**  
+    a. Operational Transformation (OT): A common approach in collaborative editing that transforms concurrent operations to ensure consistency.  
+    b. Differential Synchronization: Another technique that tracks changes and merges them efficiently.  
+3. Offline Consistency:
+While forcing a full download for offline users works, it can be inefficient for large files or frequent disconnections.  
+Options:  
+    a. Versioning: Assign versions to the document, so offline users only download necessary changes.  
+    b. Differential Updates: Send only the changes (diffs) to offline users upon reconnection.
+
+---
+### Large Group && Conflict Resolution (Last Write Wins). Session Server.
+<img width="747" alt="Screenshot 2025-04-29 at 10 20 51" src="https://github.com/user-attachments/assets/14755de3-1b11-4880-91c9-8e81515d65bc" />  
+For large groups the system design becomes similar to the group chat. It means you have to use Messaging system and Topic.
+
+**How It Works (High-Level):**
+
+1. Publish Edits: When a user makes an edit, publish it as a message to a dedicated Kafka topic for the document. Include a timestamp or sequence number to determine order.
+2. Single Consumer per Document: Have a single consumer (or a group of consumers acting as one logical consumer) responsible for processing edits for each document. This ensures edits are applied in the order they appear in the Kafka partition.
+3. Conflict Resolution and File Update: The consumers read "edits" from the Kafka topic.  
+3. Applies the edits to the document, using the timestamp or sequence number to determine the order and implement "last write wins" logic.
+4. Updates the blob storage with the latest consistent version of the document.
+5. WebSocket Notifications: After the file is updated, send WebSocket notifications to all collaborators to inform them of the changes (similar to your original design).
+
+**Important Considerations:**
+1. Timestamp Synchronization: Ensure that timestamps used for ordering are as closely synchronized as possible across clients to avoid inconsistencies.
+2. Handling Edits from Offline Users: Design a strategy to incorporate edits made by offline users while minimizing conflicts (e.g., conflict markers, user-assisted merging).
+
