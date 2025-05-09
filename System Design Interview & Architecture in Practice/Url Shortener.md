@@ -42,11 +42,28 @@ Here is a link to Miro: https://miro.com/app/board/uXjVMzmvKEQ=/?moveToWidget=34
 ## Traffic & Bandwidth Estimation
 ![image](https://github.com/Glareone/AZ-304-SA-And-Architecture-Design-In-Depth/assets/4239376/95c52cb7-4a1b-4fbf-a863-41dca380028f)
 
-
-## High-level System Design
-### Approach with Database
+---
+### High-level System Design
+#### Approach with Database
 ![image](https://github.com/Glareone/AZ-304-SA-And-Architecture-Design-In-Depth/assets/4239376/da4d6b39-db6f-4f03-9efa-cc5383d56633)
-### Approach with random string generator
+
+#### Approach with random string generator (Meta Snowflake)  
+1. Generate Unique IDs: Use Snowflake or a similar system to generate a unique 64-bit ID for each URL submitted by users. Each ID will be globally unique due to the combination of timestamp, datacenter ID, machine ID, and sequence number.
+
+2. Convert IDs to URL-friendly Format: Since each Snowflake ID is 64 bits, you can encode this ID into a shorter, URL-friendly string. Using base62 encoding (characters 0-9, a-z, A-Z) is a common approach as it allows you to represent a large number in a compact form. Here's how the conversion typically works:
+
+3. Example of Snowflake ID to Short URL Conversion:
+Given a Snowflake ID like 'DATACENTER-ID''GENERATOR-SERVICE-ID''TIMESTAMP''NUMBER-OF-GENERATED' 521504606222354432, you would convert this to a base62 string, which might look something like 7FlmR3s. This string is then used as the path in your TinyURL, such as https://tinyurl.com/7FlmR3s.
+
 ### Approach with generate-on-the-fly
+This approach is about generating Hashcode using known algorithm, for instance, MD5.  
+
+**PROS:**
+1. If collisions are acceptable - it might be a good solution.
+2. Simple design - we generate unique string, then store it in the DB. It's important to check what DB throughput on writing we can guarantee. 
+
+**CONS:**
+1. The main issue with this approach is potential collisions.
+2. 
 
 ## Low-level System Design
