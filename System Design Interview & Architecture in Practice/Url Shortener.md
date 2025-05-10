@@ -102,4 +102,36 @@ CONS:
 | Messaging + DynamoDB | High | High (distributed) | Very High | High | High | Eventual |
 
 ---
-### Low-level System Design
+### Wise Engineering: Challenging Simple Solutions Over Complex Ones
+When designing a system, it's critical to balance complexity with the actual business requirements. Often, simple solutions are sufficient and preferable over more elaborate, complex designs. Let's break down how these principles apply to a TinyURL system, focusing on simplicity and cost-effectiveness.
+
+1. Rethink "Unique ShortURL for Each LongURL" as a Strict Requirement
+* Not Necessary for Most Use Cases: While ensuring a unique short URL for each long URL sounds appealing, it rarely provides meaningful benefits in practical scenarios. For example, creating a unique short URL for every long URL might only be required if end users need deterministically predictable mappings or if the system needs to handle exact duplicates. In contrast, accepting hash-code collisions reduces system complexity without significantly impacting functionality.
+* Simpler Solution Without ID Generators: By accepting hash-code collisions (e.g., using MD5 or SHA for short URL generation), you can eliminate the need for distributed ID generation systems like Snowflake or database-managed sequences. Instead, an API-driven design combined with caching and a database is sufficient. Collisions can be handled gracefully (e.g., by checking for duplicates in the database and appending random characters if needed), reducing architectural overhead.
+
+2. Cloud Databases: High Throughput, High Cost
+* High-Throughput Options Are Expensive: Popular cloud databases like Azure CosmosDB and AWS DynamoDB are often recommended for handling high write throughput in distributed systems. These databases are robust and scalable but come with significant operational costs. DynamoDB, for example, charges based on write capacity units, read capacity units, and data storage, which can quickly become unaffordable at scale.
+* Key-Value Databases Are a Cost-Effective Alternative: Instead of relying on expensive cloud databases, you can opt for open-source or self-hosted Key-Value stores like Cassandra, ScyllaDB, or RocksDB. These databases are built on an LSM-tree (Log-Structured Merge-tree) architecture, making them ideal for handling ShortURL → LongURL mappings efficiently with high write throughput. By self-hosting or using managed services for these databases, you can significantly reduce costs while maintaining scalability.
+3. Calculate Write Throughput Requirements
+* Understand Your Scale: Before committing to an expensive cloud database, calculate the actual write throughput your system requires. For example:
+DynamoDB guarantees 40MB/s write throughput with standard provisioned capacity and up to 80MB/s on higher hosting tiers.
+Cassandra and ScyllaDB, when scaled horizontally, can easily exceed these numbers without incurring the same cost as DynamoDB. These systems are particularly effective for storing ShortURL → LongURL mappings for high-volume traffic.
+* Optimize Write Strategy: By batching writes and reducing unnecessary database operations (e.g., deduplicating incoming URLs in memory before inserting them into the database), you can further optimize throughput.
+4. Cache-Miss Concerns Are Often Overblown
+* Cache Effectiveness: Many articles exaggerate the impact of cache misses, but in reality, cache-hit rates can be very high in URL-shortening systems. Using an LRU (Least Recently Used) caching strategy effectively covers up to 80% of read requests. Since URL-shortening systems often see repeated access to popular URLs, a properly tuned cache can handle a large percentage of traffic.
+* Reduced Read Load on the Database: By offloading repeated reads to the cache, you significantly reduce the load on your underlying database, improving system performance and scalability. This makes expensive, high-read-throughput databases unnecessary for most use cases.  
+**Caching Options:**
+    - Use in-memory key-value stores like Redis or Memcached for fast lookup.
+    - Configure cache eviction policies (e.g., LRU or TTL-based) to ensure optimal memory usage while retaining popular entries.
+
+---
+### Summary and Recommendation:
+**Key Takeaways for a Simpler Solution:**
+1. Avoid overly complex designs by relaxing strict requirements for unique short URLs. Accepting hash-code collisions allows you to simplify the architecture while maintaining functionality.
+2. Replace high-cost cloud databases like DynamoDB with more affordable, scalable options like Cassandra, ScyllaDB, or RocksDB, which work well for ShortURL → LongURL mappings.
+3. Optimize write throughput by calculating actual data requirements, scaling horizontally, and minimizing unnecessary database operations.
+4. Leverage caching effectively using LRU strategies to cover read-heavy traffic, reducing database load and improving latency.
+
+Final Approach:
+1. Use an API + Cache + Key-Value Store architecture to create a cost-efficient, scalable system for URL shortening.
+2. By challenging unnecessary complexity and opting for lightweight, high-performance components, you can build a robust solution that balances simplicity with scalability.
