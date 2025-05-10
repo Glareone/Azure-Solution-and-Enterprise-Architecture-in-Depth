@@ -103,6 +103,7 @@ CONS:
 
 ---
 ### Wise Engineering: Challenging Simple Solutions Over Complex Ones
+[URL Shortener. Challenging proposed design](https://www.luu.io/posts/2025-over-engineer-url-shortener)  
 When designing a system, it's critical to balance complexity with the actual business requirements. Often, simple solutions are sufficient and preferable over more elaborate, complex designs. Let's break down how these principles apply to a TinyURL system, focusing on simplicity and cost-effectiveness.
 
 1. Rethink "Unique ShortURL for Each LongURL" as a Strict Requirement
