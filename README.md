@@ -3,10 +3,10 @@
 # Categories of materials
 * [Azure Solution Architecture](#-azure-cloud)
 * [TOGAF Enterprise Architecture](#-enterprise-architecture-togaf)
-* [Solution and System Design examples](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice)
+* [Solution and System Design examples. High and Low Level Design. Examples. NFR & Trade-offs](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice)
+* [Complex Data Structures In Depth](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/complex-data-structures-in-depth)
 * [ATAM. Architecture Trade-off Analysis Management](#architecture-atam-principles)
 * [Architecture. Patterns. General.](#architecture-patterns)
-* High and Low Level Design. Examples
 * [Microservices. Patterns. Approaches](/microservices-approaches-patterns/readme.md)
 
 ## <img src="https://github.com/Glareone/AZ-304-305-SA-And-Architecture-Design-In-Depth/assets/4239376/ecfa35ae-3001-4600-a9ee-e7158770f945" width="80" height="40" /> AWS Cloud
