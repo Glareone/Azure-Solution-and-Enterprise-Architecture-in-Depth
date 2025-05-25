@@ -221,7 +221,7 @@ You may need them for:
   
   Reverse proxy example. RP-I is Reverse proxy and it plays a load balancer role here.  
 
-> **_NOTE:_** It's impossible to keep endpoints in sync as service instances come\go. Client code must be robust against this  
+> **_NOTE:_** It's impossible to keep endpoints in sync as service instances come or go. Client code must be robust against this  
 
 ![image](https://user-images.githubusercontent.com/4239376/160920117-1ac1ab2b-7131-40b8-a56e-79c9314e98d9.png)  
 
@@ -230,7 +230,7 @@ You may need them for:
 
 </details>
 
-# Carnegie Mellon Univercity
+# Carnegie Mellon University
 * https://sites.google.com/site/softwarearchitectureinpractice/home
 ## Attribute-Driven Design (ADD)
 <details>
@@ -1399,7 +1399,7 @@ https://www.linkedin.com/pulse/architecture-10-rules-thumb-matthew-golzari/
 https://medium.com/@i.gorton/six-rules-of-thumb-for-scaling-software-architectures-a831960414f9  
 
 
-## Carnegie Mellon Univercity Slides. Solution Architecture Principles in Practice
+## Carnegie Mellon University Slides. Solution Architecture Principles in Practice
 [Solution Architecture Principles in Practice.pdf](https://github.com/Glareone/AZ-304-SA-Azure-Architect-Design/files/10609704/SAPP.V13.-.2021.pdf)  
 [Solution Architecture Principles in Practice,_Student_Workbook_2020.pdf](https://github.com/Glareone/AZ-304-SA-Azure-Architect-Design/files/10609706/SAPP_Student_Workbook_2020.pdf)  
 
