@@ -42,7 +42,14 @@
 6. [Traffic Manager](#traffic-manager)
 7. [Azure Data Factory](https://github.com/Glareone/AZ-304-SA-And-Architecture-Design-In-Depth/blob/main/azure-datafactory.md)  
 8. [Azure Proximity Placement Groups. Configuring Low-latency VMs in one DataCenter](https://github.com/Glareone/AZ-304-SA-And-Architecture-Design-In-Depth/blob/main/azure-proximity-placement-groups.md)  
-9. [Azure App Configuration. Feature Flags and Configurations](https://learn.microsoft.com/en-us/training/modules/implement-azure-app-configuration/4-app-configuration-feature-management)  
+9. [Azure App Configuration. Feature Flags and Configurations](https://learn.microsoft.com/en-us/training/modules/implement-azure-app-configuration/4-app-configuration-feature-management)
+10. [Azure AI Engineer. AI-102](https://github.com/Glareone/AI-LLM-RAG-best-practices?tab=readme-ov-file#azure-learn-useful-materials)
+    a. [AI Search Advanced Features. Scoring Profiles](https://learn.microsoft.com/en-us/training/modules/implement-advanced-search-features-azure-cognitive-search/?sharingId=8A2C0E47AED1BEB)
+    b. [AI Search. Semantic Ranking](https://learn.microsoft.com/en-us/training/modules/use-semantic-search/3-set-up-semantic-search)  
+    c. [Document Intelligence. Composed Models](https://learn.microsoft.com/en-us/training/modules/create-composed-form-recognizer-model/)
+    d. [AI Services In containers](https://learn.microsoft.com/en-us/training/modules/investigate-container-for-use-with-ai-services/)
+    e. [AI Hub Foundry. Host Mistral in Azure](https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/models-featured?tabs=mistral-large&pivots=programming-language-python#mistral-ai)
+    f. [LUIS. Conversation Understanding. Inquiries](https://learn.microsoft.com/en-us/training/modules/build-language-understanding-model/2-understand-resources-for-building)  
 
 ## <img src="https://github.com/Glareone/AZ-304-305-SA-And-Architecture-Design-In-Depth/assets/4239376/457f5abf-aea3-430a-b3e3-ffda0d7e137a" width="100" height="40" /> Enterprise Architecture. ToGAF
 
