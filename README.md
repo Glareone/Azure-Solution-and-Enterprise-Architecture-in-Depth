@@ -231,7 +231,7 @@ You may need them for:
 </details>
 
 # Carnegie Mellon University
-* https://sites.google.com/site/softwarearchitectureinpractice/home
+Link to the [Carnegie Mellon University Course](https://insights.sei.cmu.edu/library/software-architecture-in-practice-third-edition/)
 ## Attribute-Driven Design (ADD)
 <details>
 <summary>Attribute-Driven Design in details</summary>
