@@ -1,13 +1,13 @@
 ## System Design Interview & Architecture In Practice.
 ### Real & Theoretical considerations for different case studies.
 
-Recommended Materials:
-[Grokking System Design Interview. Fundamentals](https://www.designgurus.io/course/grokking-system-design-fundamentals)  
-[Grokking System Design Interview. Intermediate](https://www.designgurus.io/course/grokking-the-system-design-interview)  
-[Grokking System Design Interview. Advanced](https://www.designgurus.io/course/grokking-the-advanced-system-design-interview)  
+Recommended Materials:  
+* [Grokking System Design Interview. Fundamentals](https://www.designgurus.io/course/grokking-system-design-fundamentals)    
+* [Grokking System Design Interview. Intermediate](https://www.designgurus.io/course/grokking-the-system-design-interview)    
+* [Grokking System Design Interview. Advanced](https://www.designgurus.io/course/grokking-the-advanced-system-design-interview)    
 
 ### Additional Materials
-1. Additional Materials about Complex Data Structures COuld be found [Here](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/complex-data-structures-in-depth)
+1. [Complex Data Structures. Additional Materials](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/complex-data-structures-in-depth)
 2. [Micro-services approach and patterns](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/microservices-approaches-patterns)
 
 ### Table of content:
