@@ -8,7 +8,7 @@ Recommended Materials:
 
 ### Additional Materials
 1. Additional Materials about Complex Data Structures COuld be found [Here](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/complex-data-structures-in-depth)
-2. 
+2. [Micro-services approach and patterns](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/microservices-approaches-patterns)
 
 ### Table of content:
 1. [WIP. Notification Service](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice/Notification_service.md)
