@@ -58,12 +58,21 @@ CONS:
 
 3. Hybrid Event Sourcing
 
-Comparison
-| Pattern | Complexity | Consistency | Scalability  | Cost | Use Case | 
-| -- | -- | --| -- | -- | -- |
-| EventBridge + Lambda | Medium | Eventual | High | Medium | General purpose, loose coupling | 
-| SQS FIFO + Attributes | Low | Strong | Medium | Low | Simple aggregation, cost-sensitive   |
-| Event Sourcing | High | Strong | Very High | High | Complex business logic, audit trails   |
+Idea: Instead of storing ONLY events (like pure Event Sourcing), you store both current state AND events.
+
+PROS:
+1. No Complex Projections
+  - Pure ES: Must maintain multiple read models
+  - Hybrid: Query current state directly
+
+2. Easier Debugging
+  - Pure ES: "What's the current state?" → Replay events
+  - Hybrid: "What's the current state?" → Check the table
+
+Real-World Example: File Management System
+
+4. Event Sourcing  
+![image](https://github.com/user-attachments/assets/a22c6bfd-e561-4580-93a9-8ee76d1eac95)
 
 #### Recommended Per Scenario:
 1. SQS FIFO. Start Simple.
@@ -79,12 +88,35 @@ Comparison
 * Implement retry and DLQ patterns
 * Support for complex routing
 
-3. Event Sourcing. Complex Enterprise Solution.
+3. Hybrid Event Sourcing.
+* Much easier than pure Event Sourcing but still scalable
+* Supports different combinations and implementations
+* Performance: Fast queries on current state
+* Simpler Mental Model (Developers understand tables, No complex event replay logic)
+
+4. Event Sourcing. Complex Enterprise Solution.
 
 * Full event sourcing for audit trails
 * CQRS patterns for read/write separation
 * Multiple projections for different views
 * Support for time travel and replay
+
+Comparison
+| Pattern | Complexity | Consistency | Scalability  | Cost | Use Case | 
+| -- | -- | --| -- | -- | -- |
+| EventBridge + Lambda | Medium | Eventual | High | Medium | General purpose, loose coupling | 
+| SQS FIFO + Attributes | Low | Strong | Medium | Low | Simple aggregation, cost-sensitive   |
+| Event Sourcing | High | Strong | Very High | High | Complex business logic, audit trails   |
+
+
+### Why Event-Driven is Superior for the Large Scale:
+
+1. Loose Coupling: Each component only knows about events, not other components
+2. Fault Tolerance: Failed chunks can be retried without affecting others.
+3. Scalability: Easy to add new event consumers or processing logic
+4. Ability To restart failed operations without necessity to restart the whole flow (which is usually very useful) 
+5. Observability: Complete audit trail of all operations
+6. AWS Native: Leverages managed services optimally.
 
 -----
 ### B. Hadoop Ecosystem
@@ -115,6 +147,3 @@ PROS:
 CONS:
 1. Not really suitable for small file processings
 2. Steep Learning Curve
-
-
-
