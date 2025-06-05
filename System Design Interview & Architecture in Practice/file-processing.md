@@ -33,3 +33,50 @@ Nowadays there are a lot of different tools and approaches how to process things
 Constraints:
 1. Compliance: GDPR. Data Should reside in the selected Country.
 2. Cost Optimization: Processing should be cost-effective, but after making main the processing work.
+
+-----
+High Level overview on Options.
+
+-----
+### A. Fan-Out with Functions & Messaging  
+Architecture Pattern:
+Document --FAN-OUT--> Message Queue ---> Multiple Lambda/Functions --FAN-IN--> Results Aggregation
+
+PROS: Well known, it's technology lock
+
+CONS: 
+1. Potential Technological lock.
+2. Hard to build "Aggregation Function" in distributed systems
+
+-----
+### B. Hadoop Ecosystem
+Architecture Pattern:
+HDFS Storage → MapReduce/Spark Jobs → Distributed Processing → Results to Data Lake
+
+PROS:
+1. Suitable for massive processing
+
+CONS: 
+1. high price,
+2. acute learning curve,
+3. big compute overhead,
+4. not near-realtime processing.
+
+-----
+### C. Databricks Platform**  
+Architecture Pattern:
+Delta Lake → Spark Clusters → ML Pipelines → Collaborative Notebooks
+
+PROS:
+1. MPP (Massive Parallel Processing with ability to restart the little piece of work)
+2. Well Known technology which is based on Apache Spark.
+3. Ability to build complex processing systems
+4. Suitable for massive parallel processing
+5. Better than Hadoop for document processing
+
+CONS:
+1. Not really suitable for small file processings
+2. Steep Learning Curve
+
+
+
