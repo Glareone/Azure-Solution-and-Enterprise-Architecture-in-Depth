@@ -53,6 +53,38 @@ CONS:
 1. EventFlow. EventBridge + Aggregator
 ![image](https://github.com/user-attachments/assets/542ff67c-0f3e-4a91-9ea5-33b168083945)
 
+2. Message Attributes with SQS FIFO \ Azure ServiceBus Message Sessions
+![image](https://github.com/user-attachments/assets/658fa252-46fd-4f97-8948-619c7532553f)
+
+3. Hybrid Event Sourcing
+
+Comparison
+| Pattern | Complexity | Consistency | Scalability  | Cost | Use Case | 
+| -- | -- | --| -- | -- | -- |
+| EventBridge + Lambda | Medium | Eventual | High | Medium | General purpose, loose coupling | 
+| SQS FIFO + Attributes | Low | Strong | Medium | Low | Simple aggregation, cost-sensitive   |
+| Event Sourcing | High | Strong | Very High | High | Complex business logic, audit trails   |
+
+#### Recommended Per Scenario:
+1. SQS FIFO. Start Simple.
+* Use SQS FIFO for ordered processing
+* Simple Lambda aggregator
+* DynamoDB / S3 for state tracking
+* Perfect for MVP and small-medium scale  
+  
+2. EventBridge: Scale Up.
+
+* Migrate to EventBridge for better decoupling
+* Add multiple event consumers
+* Implement retry and DLQ patterns
+* Support for complex routing
+
+3. Event Sourcing. Complex Enterprise Solution.
+
+* Full event sourcing for audit trails
+* CQRS patterns for read/write separation
+* Multiple projections for different views
+* Support for time travel and replay
 
 -----
 ### B. Hadoop Ecosystem
