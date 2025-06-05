@@ -48,7 +48,6 @@ CONS:
 1. Potential Technological lock.
 2. Hard to build "Aggregation Function" in distributed systems
 
-
 ### Implementation Options.
 1. EventFlow. EventBridge + Aggregator
 ![image](https://github.com/user-attachments/assets/542ff67c-0f3e-4a91-9ea5-33b168083945)
@@ -70,6 +69,12 @@ PROS:
   - Hybrid: "What's the current state?" → Check the table
 
 Real-World Example: File Management System
+
+#### Hybrid Event Sourcing gives you 80% of the benefits of Event Sourcing with 20% of the complexity. It's perfect for:
+* Audit requirements
+* Debugging production issues
+* Building analytics
+* Maintaining compliance
 
 4. Event Sourcing  
 ![image](https://github.com/user-attachments/assets/a22c6bfd-e561-4580-93a9-8ee76d1eac95)
