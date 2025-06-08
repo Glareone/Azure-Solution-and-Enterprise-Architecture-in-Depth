@@ -24,8 +24,7 @@
       * Near real-time: 100ms - 2s. Acceptable for fraud detection, content moderation.
       * Batch processing: Minutes - hours (daily reports, bulk data processing)
    - Model **size** constraints. Edge (mobile) deployment vs Cloud-based?
-2. Security & Compliance:
-   - Data **residency** requirements (GDPR, HIPAA, separate industry-specific regulations)?
+2. Security:
    - **Model explainability** and **audit trail**: The ability to understand and explain why a model made a specific decision or prediction?
    - **Access control** and authentication mechanisms to model?
    - **Data encryption** at-rest and in-transit requirements?
@@ -36,6 +35,9 @@
    - Integration patterns with existing enterprise systems?
 
 ### Constraints
+![image](https://github.com/user-attachments/assets/67f4aa11-0725-4fa5-84c7-ac9d8524c95b)
+
+
 1. Allocation:
    - GPU/compute resource allocation strategy? (On-premises vs Separate provider)? `This constraint fundamentally changes our architecture - on-premises means we manage Kubernetes clusters and GPU scheduling, cloud means we optimize for cost and vendor lock-in`
 2. Existing Technology Landscape:
@@ -49,3 +51,10 @@
    - **Data volume** and velocity: Streaming vs. batch data ingestion capabilities?
    - **Data quality** and **labeling**: Do we have clean, labeled datasets or need data preparation pipelines?
    - Data location and movement: Cross-region data transfer costs and latency?
+6. Regulatory & Data Compliance:
+   - Data **residency** requirements (GDPR, HIPAA, separate industry-specific regulations)?
+  
+7. Budget/Cost Constraints:
+   - CapEx vs OpEx.
+   - Cost predictability: Fixed monthly costs vs. variable usage-based pricing?
+   - ROI Return-Of-Investments timeline: When must the solution pay for itself?
