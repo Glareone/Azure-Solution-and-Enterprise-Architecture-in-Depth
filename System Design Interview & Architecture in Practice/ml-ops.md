@@ -36,8 +36,6 @@
 
 ### Constraints
 ![image](https://github.com/user-attachments/assets/67f4aa11-0725-4fa5-84c7-ac9d8524c95b)
-
-
 1. Allocation:
    - GPU/compute resource allocation strategy? (On-premises vs Separate provider)? `This constraint fundamentally changes our architecture - on-premises means we manage Kubernetes clusters and GPU scheduling, cloud means we optimize for cost and vendor lock-in`
 2. Existing Technology Landscape:
@@ -52,9 +50,64 @@
    - **Data quality** and **labeling**: Do we have clean, labeled datasets or need data preparation pipelines?
    - Data location and movement: Cross-region data transfer costs and latency?
 6. Regulatory & Data Compliance:
-   - Data **residency** requirements (GDPR, HIPAA, separate industry-specific regulations)?
-  
+   - Data **residency** requirements (GDPR, HIPAA, separate industry-specific regulations)?  
 7. Budget/Cost Constraints:
    - CapEx vs OpEx.
    - Cost predictability: Fixed monthly costs vs. variable usage-based pricing?
    - ROI Return-Of-Investments timeline: When must the solution pay for itself?
+
+---
+### Scenario 0. Small-scale project, GenAI, short timeline (3-6 month)
+
+---
+### Scenario 1. Mid Size project, GenAI, 12 Month timeline
+**Prerequisites:**  
+1. Medium size project.
+2. 12 month timeline.
+3. We only want to train milliops of ops for this project, but with the ability to reuse the foundation for others.
+4. We are currently only focused on GenAI, so we prefer to train either established models or open source models like Llama.
+5. There are limited options for fine-tuning, so we prefer to get up and running quickly rather than hosting everything on-premises and running on our own GPUs.
+6. Compliance: Let's say we want to be GDPR compliant because the client is in Europe, so data location matters.
+7. Costs: Opex over Capex.
+
+**Basic Principles:**  
+![image](https://github.com/user-attachments/assets/6b774114-6ed7-4dec-a44d-35f2ee47c2b7)
+
+
+**Platform Selection**  
+Primary choice here whould be based on Cloud Stack in the company and ability to incorporate the Public Cloud Provider: AWS or Azure. 
+1. Primary Choice: AWS Bedrock + EU Regions. Ability to utilize SageMaker in extra scenarios.
+  - Rationale: GDPR compliance through eu-west-1/eu-central-1, managed fine-tuning, OpEx model
+  - Models available: Claude, Llama 2/3, Titan, Cohere
+  - Fine-tuning: Managed service, not necessary to manage GPUs on your own
+2. Alternative: Azure OpenAI Service (EU regions)
+  - Rationale: Azure expertise, GDPR-compliant regions
+  - Models: GPT-4, GPT-3.5, plus planned Llama integration
+  - Benefit: Faster implementation using Azure OpenAI Service + Azure AI Foundry
+
+**Data & Feature Management**  
+1. AWS S3 (eu-central-1) or Azure Storage Account or Azure Data Lake: GDPR-compliant data storages with different accesses, API\SDK and Hadoop.
+2. Feature stores:
+   - AWS S3 supports feature store integration with SageMaker and could play Knowledge base for Bedrock
+   - Azure Data Lake supports integration into AI Machine Learning Studio.
+   - Azure Storage Account supports integration with AI Foundry and could be a part of your RAG solutions
+3. S3 & Storage Account support versioning
+
+**Model Development & Training**  
+1. Managed fine-tuning: Bedrock Custom Models, Azure OpenAI fine-tuning, Azure AI Foundry fine-tuning
+2. Experimentation: AWS SageMaker Studio, Azure ML Studio, Azure AI Foundry studio
+3. MLflow Model Deployment: Model Artifacts + Serving Code -> Docker Image (ACR/ECR) -> Deployment
+4. MLflow Model Registry & Version control. Purpose: Manages ML model artifacts, metadata, and lifecycle
+What it stores. **Idea: Code (Git) -> Training -> Model Artifacts (MLflow Registry)**
+   - Serialized model files (pickle, ONNX, PyTorch, etc.)
+   - Model metadata (accuracy, parameters, training data lineage)
+   - Model versions and stages (staging, production, archived)
+5. Model versioning: Platform-native model registry for artifacts and metadata
+6. Container versioning: ACR/ECR for deployment-ready images
+7. Data versioning: DVC or platform-native data versioning
+```
+Git (Code) 
+├── MLflow/Platform (Experiments & Model Artifacts)
+└── ACR/ECR (Serving Container Images)
+    └── Kubernetes/Container Service (Deployment)
+```
