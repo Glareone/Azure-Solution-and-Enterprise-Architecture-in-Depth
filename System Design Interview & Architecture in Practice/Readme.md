@@ -22,4 +22,5 @@ Recommended Materials:
 9. [Google Disk](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice/google-disk.md)
 10. [WIP. Live Streaming](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice/live-streaming.md)
 11. WIP. Uber. Need to aggregate materials.
+12. [MLOps](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice/ml-ops.md)
 
