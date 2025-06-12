@@ -18,7 +18,7 @@
    - For DynamoDB Service it handles it using multi-AZ replication, Transparent Recovery. 
 
 
-## Consistent Hashing for DynamoDB
+## Consistent Hashing (basics) for DynamoDB
 ![image](https://github.com/user-attachments/assets/8844e35f-2a99-4cfd-92da-ee3786faa835)
 
 * Original partition: hash range [0x0000 - 0xFFFF]
@@ -33,3 +33,16 @@
 * DynamoDB: AWS handles replication (typically 3x across AZs)
 * Traditional Distributed Hash Table: You handle node failures
 * DynamoDB: AWS manages partition health and replacement
+
+### Consistent Hashing using Virtual Nodes
+![image](https://github.com/user-attachments/assets/a6db73b4-694b-447d-989c-f075458169de)
+
+#### Without Virtual Nodes: Each physical node gets one position on the hash ring
+* Uneven load distribution: Some nodes might get much more data than others
+* Expensive rebalancing: Adding/removing a node affects only its immediate neighbors
+* Hot spots: If one range gets more traffic, that physical node becomes a bottleneck
+
+#### Virtual Nodes Solution
+* With Virtual Nodes: Each physical node is assigned multiple positions (tokens) on the hash ring
+* Instead of 1 position per node, maybe 100-256 positions per node
+* Data is distributed across many small ranges instead of few large ones
