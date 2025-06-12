@@ -46,3 +46,15 @@
 * With Virtual Nodes: Each physical node is assigned multiple positions (tokens) on the hash ring
 * Instead of 1 position per node, maybe 100-256 positions per node
 * Data is distributed across many small ranges instead of few large ones
+
+---
+### Vector Clocks. Vector Clocks vs NTP protocal. Conflicting Data
+Dynamo uses something called vector clock in order to capture causality between different versions of the same object.   
+A vector clock is effectively a list of (node, counter) pairs.    
+One vector clock is associated with every version of every object stored in Dynamo.  
+
+1. In order to determine **whether two versions of an object are on parallel branches or have a causal ordering by examining their vector clocks**.
+2. If the counters on the first object's clock are less-than-or-equal to all of the nodes in the second clock, then the first is an ancestor of the second and can be forgotten.
+3. Otherwise, the two changes are considered `to be in conflict and require reconciliation`. Dynamo `resolves these conflicts at read-time`.
+
+![image](https://github.com/user-attachments/assets/e6862261-bec5-449c-84fb-de05757ad03b)
