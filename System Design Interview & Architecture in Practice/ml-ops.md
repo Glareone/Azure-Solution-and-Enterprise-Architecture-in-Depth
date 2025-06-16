@@ -109,18 +109,18 @@ Data Preparation
 2. Multiple model access - GPT-4, Llama, Phi, and other models in one place
 3. Managed fine-tuning - can fine-tune without infrastructure management
 4. Built-in MLOps - model registry, versioning, deployment built-in
-
-**No need for:**  
-1. Complex model registries
-2. CI/CD pipelines for models
-3. Advanced monitoring and drift detection
-4. Multi-environment deployments
 5. MLOps Features out of the box:
    * Model registry and versioning
    * Automated deployment pipelines
    * Built-in monitoring and logging
    * Integration with Azure DevOps
    * Cost tracking and optimization
+
+**No need for:**  
+1. Complex model registries
+2. CI/CD pipelines for models
+3. Advanced monitoring and drift detection
+4. Multi-environment deployments
 
 **Recommended Platform Hierarchy**  
 **Tier 1 (Fastest Time to Market):** 
@@ -140,6 +140,8 @@ Data Preparation
 
 ---
 ### Scenario 1. Mid Size project, GenAI, 12 Month timeline
+For ~12month mid size project it's also worth to consider the simple scenario described in `Scenario 0`, but addressing new challenges.  
+
 **Prerequisites:**  
 1. Project Scale: Medium-sized project with moderate complexity
 2. Timeline: 12-month delivery schedule
