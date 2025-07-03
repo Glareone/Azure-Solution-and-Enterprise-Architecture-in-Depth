@@ -1,6 +1,8 @@
 # System Design Patterns.
 ---
 ### BLOOM FILTER
+<img src="https://github.com/user-attachments/assets/81711354-1a81-4868-b33d-81b21136fd06" alt="Bloom Filter" width="400">
+
 * Bloom filter is used in situations when you want to check if element is presented in your collection or database without reading the data from the database.
 * Typical Problem: "How to reduce the number of database or collection read operations?"
 * Real world example:
