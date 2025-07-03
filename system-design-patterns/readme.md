@@ -33,7 +33,10 @@
 ## READ REPAIR
 ## MERKLE TREES
 ## TWO-PHASE COMMIT
-## SAGA PATTERN
+---
+### SAGA PATTERN
+<img src="https://github.com/user-attachments/assets/744045be-d6ed-4ccf-b857-15c289a5de87" alt="Saga" width="400">
+
 ---
 ### OUTBOX PATTERN
 * The outbox pattern's primary purpose is ensuring atomicity between database writes and event publishing in distributed systems.
@@ -57,4 +60,5 @@
 4. "3-Phase commit" 3PC is very expensive, very rarely used in real systems.
 5. SAGA pattern - can work in situations when you can rollback changes, does not replace Outbox pattern.
 ---
+## LISTEN YOURSELF PATTERN
 
