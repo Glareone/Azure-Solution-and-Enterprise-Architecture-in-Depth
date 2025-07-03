@@ -1,5 +1,18 @@
 # System Design Patterns.
-## BLOOM FILTER
+---
+### BLOOM FILTER
+* Bloom filter is used in situations when you want to check if element is presented in your collection or database without reading the data from the database.
+* Typical Problem: "How to reduce the number of database or collection read operations?"
+* Real world example:
+   1. SQL Database uses Bloom filter to check if such element exist. Using single hash algorithm isnt sufficient to guarantee that element doesnt exist. Reduce I\O.
+   2. NoSQL MongoDB uses Bloom filter in LSM-tree to optimize flushing on the disk. Example: you need to check several files. Reduce I\O operations.
+      a. File 1 bloom filter: "user123" → MAYBE (check the file)
+      b. File 2 bloom filter: "user123" → DEFINITELY NOT (skip this file!)
+      c. File 3 bloom filter: "user123" → DEFINITELY NOT (skip this file!)
+   4. Useful when you search over several database shards and you want to determine what shards to read to get all needed information and reduce the number of reads.
+   5. Redis. Fast prefilter to check some conditions. For instance "Is the member with id 'X' a premium member?". Speed-up searching and condition checks.
+   6. Bloom filter does not guarantee that element exists, but if several related hashes found - the chance is very high. But the algorithm can guarantee that if you dont see any related hashes - the element does not present in the database or collection. 
+---
 ## CONSISTENT HASHING
 ## QUORUM
 ## LEADER AND FOLLOWER
