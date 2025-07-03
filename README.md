@@ -10,7 +10,7 @@
 * [Microservices. Patterns. Approaches](/microservices-approaches-patterns/readme.md)
 
 ## <img src="https://github.com/Glareone/AZ-304-305-SA-And-Architecture-Design-In-Depth/assets/4239376/ecfa35ae-3001-4600-a9ee-e7158770f945" width="80" height="40" /> AWS Cloud
-1. [AWS: Solution Architecture in Practice](https://github.com/Glareone/AWS-Certified-Solution-Architect)
+1. [AWS: Solution Architecture. Theory and in Practice](https://github.com/Glareone/AWS-Certified-Solution-Architect)
 
 ## <img src="https://github.com/Glareone/AZ-304-305-SA-And-Architecture-Design-In-Depth/assets/4239376/32dd19a5-8468-4044-937a-158443f49772" width="50" height="40" /> Azure Cloud
 1. [Azure: Solution Architecture in Practice](#governance-and-compliance-materials)  
