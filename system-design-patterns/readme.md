@@ -62,6 +62,9 @@
 5. SAGA pattern - can work in situations when you can rollback changes, does not replace Outbox pattern.
 ---
 ### LISTEN TO YOURSELF PATTERN
+![image](https://github.com/user-attachments/assets/c8adbc4d-f554-41ff-93a0-e1355ef65dd0)
+
+
 * Dual-write problem: the listen to yourself pattern's primary purpose is ensuring atomicity between database writes and event publishing in distributed systems.  
 * Problem is identical to Outbox pattern's problem. "How can I guarantee that when I save data to my database, I also publish an event, and both succeed or both fail together?"
 
@@ -71,8 +74,24 @@
 3. When it detects row creation/update/deletion, it emits events to a queue/topic.
 4. Your app (and other services) consume these events.
 
-
-
+Key Points:
+* Usually implemented using Change Data Capture tooling (CDC).
+* The CDC tool is not part of your application code - it's infrastructure that sits between your database and message broker.
+* Your application code becomes simpler because it only needs to:
+    - Write to database.
+    - Listen to events (just like any other consumer).
+* Requires additional service which detects DB writes.
+* Some Native Cloud services provide this tool: Azure Event Hub, Google Cloud DataFlow.
+* Some Database specific tools are able to detect changes.
+    - MongoDB Change Streams.  
+    - PostgreSQL Logical Replication.
+    - PostgreSQL Logical Decoding: plugins pgoutput, wal2json.
+    - MySQL: Binary log replication.
+    - SQL Server: Change Data Capture.
+    - Oracle: Streams (Enterprise-tier feature)
+* Has infrastructure overhead - you need to introduce either new infra configuration to manage CDC.
+    - especially if your database does not support this tool out of the box.
+    - lots of options on the market.  
 ---
 ### Outbox vs Listen To Yourself vs 2PC
 
@@ -82,10 +101,14 @@ Pattern Comparison
 | **Complexity**  | 🟡 Medium                | 🟡 Medium                | 🔴 High                |
 | **Performance** | 🟢 Good                  | 🟢 Good                  | 🔴 Poor                |
 | **Atomicity**   | 🟡 Eventually consistent | 🟡 Eventually consistent | 🟢 Strongly consistent |
+| **Failure scenarios** | 🟡 Event publishing can fail | 🟡 Event publishing can fail | 🟡 Any participant can block the commit |
+| **Infrastructure**    | 🟡 Needs CDC tooling | 🟡 Needs background processors | 🟡 Needs 2PC coordinator |
+| **Latency**           | 🟢 Low-medium | 🟢 Low-medium | 🔴 High |
+| **Scalability** | 🟢 Excellent | 🟢 Good | 🔴 Poor |
 
-Listen to Yourself:
-✅ Single write operation (simpler business logic)  
-✅ Database is source of truth  
+**Listen to Yourself:**  
+✅ Single write operation (simpler business logic)    
+✅ Database is source of truth   
 ❌ Requires CDC (Change Data Capture tooling and supporting systems) infrastructure. 
   * CDC is a method of tracking and capturing changes made to a database so they can be replicated or processed elsewhere.
      - Debezium.
@@ -100,13 +123,13 @@ Listen to Yourself:
 ❌ Events tied to database schema changes  
 ❌ Harder to add business context to events  
 
-Outbox Pattern:  
+**Outbox Pattern:**  
 ✅ Events can contain rich business context    
 ✅ No external CDC dependencies  
 ❌ Requires outbox table management  
 ❌ Business logic must remember to write to outbox  
 
-2PC:  
+**2PC:**  
 ✅ Strong consistency guarantees  
 ❌ Blocking protocol (availability issues)  
 ❌ Performance overhead  
