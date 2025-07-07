@@ -19,6 +19,58 @@
 ## QUORUM
 ## LEADER AND FOLLOWER
 ## WRITE-AHEAD LOG
+![image](https://github.com/user-attachments/assets/76574cc0-b8d8-446e-8944-ba5605f6714d)
+
+
+Idea of the pattern:
+* You do make changes directly to data, but only after logging them. The WAL ensures durability before the actual modification.
+   - This guarantees that no matter what happens, the system can always recover or replicate its state.
+* You're not storing the actual change, but a description/record of what needs to be changed.
+
+**Typical Write-Ahead Log (WAL) Implementation**:
+1. Log the intended change (write operation description to WAL)  
+2. Apply the change to actual data structures  
+3. Periodically checkpoint (persist in-memory changes to disk)  
+4. Truncate old log entries (once data is safely persisted)
+
+** Why WAL is Universal. The Pattern Solves the following problems**:
+1. Crash recovery: "What was I doing before the crash?"
+2. Replication: "What changes do I need to send to replicas?"
+3. Ordering: "What's the correct sequence of operations?"
+4. Durability: "How do I ensure data isn't lost?"
+
+**Typical WAL Usage in different Databases**:
+**B-Tree Databases:**  
+1. PostgreSQL: Uses WAL for crash recovery and replication  
+2. MySQL InnoDB: Redo logs (WAL implementation)  
+3. SQLite: WAL mode for better concurrency  
+
+**LSM-Tree Databases:** 
+1. Cassandra: Commit logs before memtable writes  
+2. HBase: Write-Ahead Log for RegionServers  
+3. RocksDB: WAL for crash recovery  
+
+**Distributed Databases**:  
+1. Spanner: Uses Paxos with WAL for each shard
+2. FoundationDB: WAL for transaction logging
+3. TiDB: Raft logs + TiKV storage WAL
+
+**Other Databases:** 
+1. MongoDB: Oplog (operations log) for replication
+2. Redis: AOF (Append-Only File) persistence
+3. CockroachDB: Raft logs + storage WAL
+
+**Typical WAL Usage in Distributed Systems**:
+1. Consensus Protocols:
+  - Raft: Leader writes entries to log, replicates to followers
+  - Multi-Paxos: Acceptors maintain logs of accepted proposals
+  - PBFT: Nodes maintain logs of protocol messages
+
+2. Message Brokers:
+  - Apache Kafka: Each partition is essentially a WAL
+  - Apache Pulsar: BookKeeper uses WAL for durability
+  - NATS Streaming: Message logs for persistence
+
 ## SEGMENTED LOG
 ## HIGH-WATER MARK
 ## LEASE
