@@ -66,10 +66,12 @@
 * Problem is identical to Outbox pattern's problem. "How can I guarantee that when I save data to my database, I also publish an event, and both succeed or both fail together?"
 
 * Implementation:
-  - Your app writes to the database (normal operation).
-  - A separate specialized tool monitors the database for changes.
-  - When it detects row creation/update/deletion, it emits events to a queue/topic.
-  - Your app (and other services) consume these events.
+1. Your app writes to the database (normal operation).
+2. A separate specialized tool monitors the database for changes.
+3. When it detects row creation/update/deletion, it emits events to a queue/topic.
+4. Your app (and other services) consume these events.
+
+
 
 ---
 ### Outbox vs Listen To Yourself vs 2PC
@@ -86,22 +88,29 @@ Listen to Yourself:
 ✅ Database is source of truth  
 ❌ Requires CDC (Change Data Capture tooling and supporting systems) infrastructure. 
   * CDC is a method of tracking and capturing changes made to a database so they can be replicated or processed elsewhere.
-     - Debezium, Maxwell (for MySql), AWS DMS (AWS Database Migration System), Confluent (commertial Kafka-based tool), MongoDB Change Streams, PostgreSQL logical replication
+     - Debezium.
+     - Maxwell (for MySql).
+     - AWS DMS (AWS Database Migration System).
+     - Confluent (commertial Kafka-based tool).
+     - MongoDB Change Streams,
+     - PostgreSQL logical replication
+     - Google Cloud Dataflow
+     - Azure Event Hubs (with CDC connectors)
+   
 ❌ Events tied to database schema changes  
 ❌ Harder to add business context to events  
 
-Outbox Pattern:
-✅ Events can contain rich business context  
+Outbox Pattern:  
+✅ Events can contain rich business context    
 ✅ No external CDC dependencies  
 ❌ Requires outbox table management  
 ❌ Business logic must remember to write to outbox  
 
-2PC:
-
-✅ Strong consistency guarantees
-❌ Blocking protocol (availability issues)
-❌ Performance overhead
-❌ Complex failure recovery
+2PC:  
+✅ Strong consistency guarantees  
+❌ Blocking protocol (availability issues)  
+❌ Performance overhead  
+❌ Complex failure recovery  
 
 **When to Choose Which?**:  
 * Listen to Yourself: When you want database-driven architecture and can invest in CDC infrastructure.  
