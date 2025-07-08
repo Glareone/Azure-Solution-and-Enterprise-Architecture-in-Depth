@@ -190,15 +190,15 @@ public async Task RecoveryService() {
 ### Outbox vs Listen To Yourself vs 2PC
 
 Pattern Comparison
-| Aspect          | Listen to Yourself       | Outbox Pattern          | 2PC                    |
-|-----------------|--------------------------|-------------------------|------------------------|
-| **Complexity**  | 🟡 Medium                | 🟡 Medium                | 🔴 High                |
-| **Performance** | 🟢 Good                  | 🟢 Good                  | 🔴 Poor                |
-| **Atomicity**   | 🟡 Eventually consistent | 🟡 Eventually consistent | 🟢 Strongly consistent |
-| **Failure scenarios** | 🟡 Event publishing can fail | 🟡 Event publishing can fail | 🟡 Any participant can block the commit |
-| **Infrastructure**    | 🟡 Needs CDC tooling | 🟡 Needs background processors | 🟡 Needs 2PC coordinator |
-| **Latency**           | 🟢 Low-medium | 🟢 Low-medium | 🔴 High |
-| **Scalability** | 🟢 Excellent | 🟢 Good | 🔴 Poor |
+| Aspect          | Listen to Yourself (CDC)       |  Listen to Yourself (EventStore)  |Outbox Pattern          | 2PC      |
+|-----------------|--------------------------| -------------------------|-------------------------|------------------------|
+| **Complexity**  | 🟡 Medium                | 🟡 Medium                | 🟡 Medium                | 🔴 High                |
+| **Performance** | 🟢 Good                  | 🟢 Good                  | 🟢 Good                  | 🔴 Poor                |
+| **Atomicity**   | 🟡 Eventually consistent | 🟡 Eventually consistent | 🟡 Eventually consistent | 🟢 Strongly consistent |
+| **Failure scenarios** | 🟡 Event publishing can fail | 🟢 EventStore retries  | 🟡 Event publishing can fail | 🟡 Any participant can block the commit |
+| **Infrastructure**    | 🟡 Needs CDC tooling | 🟡 Requires Extra Database, EventStore or EventHub | 🟡 Needs background processors | 🟡 Needs 2PC coordinator |
+| **Latency**           | 🟢 Low-medium | 🟢 Low | 🟢 Low-medium | 🔴 High |
+| **Scalability** | 🟢 Good | 🟢 Excellent (LSM-tree database can provide fantastic throughput) | 🟢 Good (because your central storage is SQL)  | 🔴 Poor |
 
 **Listen to Yourself:**  
 ✅ Single write operation (simpler business logic)    
