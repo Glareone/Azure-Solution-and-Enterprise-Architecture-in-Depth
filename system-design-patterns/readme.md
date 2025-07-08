@@ -91,6 +91,8 @@ Idea of the pattern:
 
 ---
 ### OUTBOX PATTERN
+![image](https://github.com/user-attachments/assets/793cfb5a-a9e0-46fa-baf4-f3e49751415c)
+
 * Dual-write problem: The outbox pattern's primary purpose is ensuring atomicity between database writes and event publishing in distributed systems. 
 * Typical problem for outbox pattern: "How can I guarantee that when I save data to my database, I also publish an event, and both succeed or both fail together?"
 * **Real world example**:
@@ -114,13 +116,14 @@ Idea of the pattern:
 5. SAGA pattern - can work in situations when you can rollback changes, does not replace Outbox pattern.
 ---
 ### LISTEN TO YOURSELF PATTERN
-![image](https://github.com/user-attachments/assets/c8adbc4d-f554-41ff-93a0-e1355ef65dd0)
-
+![image](https://github.com/user-attachments/assets/45b5dbe2-c68d-410e-ab90-e4892fc86e4c)
 
 * Dual-write problem: the listen to yourself pattern's primary purpose is ensuring atomicity between database writes and event publishing in distributed systems.  
 * Problem is identical to Outbox pattern's problem. "How can I guarantee that when I save data to my database, I also publish an event, and both succeed or both fail together?"
 
-* Implementation:
+#### Implementation using CDC:
+![image](https://github.com/user-attachments/assets/dfdd6a4a-b950-4aa7-806d-ad5d0a730af9)
+
 1. Your app writes to the database (normal operation).
 2. A separate specialized tool monitors the database for changes.
 3. When it detects row creation/update/deletion, it emits events to a queue/topic.
@@ -143,7 +146,37 @@ Key Points:
     - Oracle: Streams (Enterprise-tier feature)
 * Has infrastructure overhead - you need to introduce either new infra configuration to manage CDC.
     - especially if your database does not support this tool out of the box.
-    - lots of options on the market.  
+    - lots of options on the market.
+
+#### Implementation using EventStore:
+![image](https://github.com/user-attachments/assets/6973c934-7335-4eb0-b186-6155a7e51aa8)
+
+```javascript
+// Single app with multiple handlers
+class OrderService {
+  async placeOrder(orderData) {
+    // 1. Store event permanently
+    await eventStore.append('PlaceOrderRequested', orderData);
+    
+    // 2. Publish for real-time processing
+    await messageBus.publish('PlaceOrderRequested', orderData);
+  }
+  
+  // Same app, "Save Order" handler
+  async handlePlaceOrderRequested(event) {
+    await database.saveOrder(event.data);
+  }
+  
+  // Same app, "Notify" handler
+  async forwardToOtherServices(event) {
+    await externalService.notify(event.data);
+  }
+}
+```
+
+#### Implementation using EventStore:
+
+
 ---
 ### Outbox vs Listen To Yourself vs 2PC
 
