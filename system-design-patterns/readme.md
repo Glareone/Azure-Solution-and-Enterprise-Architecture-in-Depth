@@ -148,34 +148,42 @@ Key Points:
     - especially if your database does not support this tool out of the box.
     - lots of options on the market.
 
-#### Implementation using EventStore:
+#### Implementation using EventStore (LSM-tree Storages) or even using Azure EventHub:
 ![image](https://github.com/user-attachments/assets/6973c934-7335-4eb0-b186-6155a7e51aa8)
+* The key: The original event is still in the EventStore/EventHub, so you can retry!
 
+✅ Durability - original event won't be lost
+✅ Traceability - you can find the component where something went wrong
+✅ Ordering - events are processed in sequence
+✅ Retry capability - failed processing can be retried
+  
 ```javascript
-// Single app with multiple handlers
-class OrderService {
-  async placeOrder(orderData) {
-    // 1. Store event permanently
-    await eventStore.append('PlaceOrderRequested', orderData);
+## Idempotent Processing
+public async Task Handle(PlaceOrderRequested evt) {
+    // Check if already processed
+    if (await database.OrderExists(evt.OrderId)) {
+        // Already in DB, just publish event
+        await eventHub.SendAsync("OrderCreated", evt.OrderData);
+        return;
+    }
     
-    // 2. Publish for real-time processing
-    await messageBus.publish('PlaceOrderRequested', orderData);
-  }
-  
-  // Same app, "Save Order" handler
-  async handlePlaceOrderRequested(event) {
-    await database.saveOrder(event.data);
-  }
-  
-  // Same app, "Notify" handler
-  async forwardToOtherServices(event) {
-    await externalService.notify(event.data);
-  }
+    // First time - save and publish
+    await database.SaveOrder(evt.OrderData);
+    await eventHub.SendAsync("OrderCreated", evt.OrderData);
 }
 ```
 
-#### Implementation using EventStore:
-
+```javascript
+// Background service. Pull strategy (which obviously emulates CDC)
+public async Task RecoveryService() {
+    // Find orders in DB without corresponding "OrderCreated" events
+    var unpublishedOrders = await database.GetOrdersWithoutEvents();
+    
+    foreach (var order in unpublishedOrders) {
+        await eventHub.SendAsync("OrderCreated", order);
+    }
+}
+```
 
 ---
 ### Outbox vs Listen To Yourself vs 2PC
