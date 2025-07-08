@@ -158,7 +158,8 @@ Key Points:
 ✅ Retry capability - failed processing can be retried
   
 ```javascript
-## Idempotent Processing
+// Idempotent Processing. You place the "PlaceOrderRequested" event first
+// then you listen yourself and handle the "side-effects".
 public async Task Handle(PlaceOrderRequested evt) {
     // Check if already processed
     if (await database.OrderExists(evt.OrderId)) {
