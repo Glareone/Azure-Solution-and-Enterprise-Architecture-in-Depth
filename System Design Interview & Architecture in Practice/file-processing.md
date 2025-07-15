@@ -40,7 +40,7 @@ High Level overview on Options.
 -----
 ### A. Fan-Out with Functions & Messaging  
 Architecture Pattern:
-Document --FAN-OUT--> Message Queue ---> Multiple Lambda/Functions --FAN-IN--> Results Aggregation
+Document --FAN-OUT--> Message Queue ---> Multiple Lambda/Functions --FAN-IN--> Results Aggregation (In System design it's "Projection Function")
 
 PROS: Well known, it's technology lock
 
