@@ -46,10 +46,10 @@ PROS: Well known, it's technology lock
 
 CONS: 
 1. Potential Technological lock.
-2. Hard to build "Aggregation Function" in distributed systems
+2. Hard to build "Projection Function" in distributed systems. Projection will control the level of the execution. In other words, how much executed messages left.
 
 ### Implementation Options.
-1. EventFlow. EventBridge + Aggregator
+1. EventFlow. EventBridge + Projection
 ![image](https://github.com/user-attachments/assets/542ff67c-0f3e-4a91-9ea5-33b168083945)
 
 2. Message Attributes with SQS FIFO \ Azure ServiceBus Message Sessions
