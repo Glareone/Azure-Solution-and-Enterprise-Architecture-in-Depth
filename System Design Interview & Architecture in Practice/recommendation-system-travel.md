@@ -22,3 +22,9 @@
 4. Data freshness: Pricing updates every 15-30 minutes, availability real-time
 
 ### Splitting the task onto 2. Recommendation System & Travel-Centric System
+---
+### Recommendation System. Batch Pipeline & Fetch Pipeline
+<img width="3579" height="1117" alt="image" src="https://github.com/user-attachments/assets/b689ed25-17d2-4a45-90f1-06fe896357e0" />
+<img width="2933" height="1363" alt="image" src="https://github.com/user-attachments/assets/9410e739-d1a9-41c1-9257-350f198c0d84" />
+
+
