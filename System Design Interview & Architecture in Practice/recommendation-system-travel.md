@@ -27,4 +27,13 @@
 <img width="3579" height="1117" alt="image" src="https://github.com/user-attachments/assets/b689ed25-17d2-4a45-90f1-06fe896357e0" />
 <img width="2933" height="1363" alt="image" src="https://github.com/user-attachments/assets/9410e739-d1a9-41c1-9257-350f198c0d84" />
 
+---
+### Batch Processing Pipeline.
+### Ranking the information
+Theoretical Part: [CLICK HERE](https://github.com/Glareone/AI-LLM-RAG-best-practices/blob/main/advanced-topics/Advanced%20Retrieval%20&%20Re-ranking.md)  
 
+Practical: 
+<img width="669" height="939" alt="image" src="https://github.com/user-attachments/assets/3bc7d994-b6f5-45d2-8248-5244d92aaa48" />
+1. WIP. ML PREDICTION MODEL
+2. CONVERSION
+---
