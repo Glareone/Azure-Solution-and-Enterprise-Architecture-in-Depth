@@ -122,3 +122,70 @@ public class SkipListRankCalculation
     }
 }
 ```
+
+Processing Rate (Naive):
+```csharp
+public class BasicWaitTimeCalculator
+{
+    private readonly IDatabase _database;
+    
+    public BasicWaitTimeCalculator(IDatabase database)
+    {
+        _database = database;
+    }
+    
+    public async Task<double> CalculateEstimatedWaitAsync(string userId, string concertId)
+    {
+        var queueKey = $"queue:concert:{concertId}";
+        var processingRateKey = $"processing_rate:{concertId}";
+        
+        // Get users ahead - O(log N)
+        var usersAhead = await GetUsersAheadAsync(userId, concertId);
+        
+        // Get current processing rate (users per second)
+        var processingRateStr = await _database.StringGetAsync(processingRateKey);
+        var processingRate = double.Parse(processingRateStr.HasValue ? processingRateStr : "0.1");
+        
+        if (usersAhead <= 0 || processingRate <= 0)
+            return 0;
+            
+        return usersAhead / processingRate; // seconds
+    }
+    
+    // Update processing rate when users are processed
+    public async Task UpdateProcessingRateAsync(string concertId, int usersProcessed, TimeSpan timeElapsed)
+    {
+        var processingRateKey = $"processing_rate:{concertId}";
+        var rate = usersProcessed / timeElapsed.TotalSeconds;
+        
+        await _database.StringSetAsync(processingRateKey, rate.ToString());
+    }
+}
+```
+
+Processing Rate (advanced): To go with hybrid score.
+```csharp
+        // get rates for different time ranges
+        var batch = _database.CreateBatch();
+        
+        var rate1MinTask = batch.StringGetAsync($"processing_rate:{concertId}:1min");
+        var rate5MinTask = batch.StringGetAsync($"processing_rate:{concertId}:5min");
+        var rate15MinTask = batch.StringGetAsync($"processing_rate:{concertId}:15min");
+        var lastUpdateTask = batch.StringGetAsync($"processing_rate:{concertId}:last_update");
+        
+        batch.Execute();
+
+        // the highest score is for the most recent processing range
+        // Give more weight to recent data
+        var weights = new Dictionary<double, double>
+        {
+            { rates.LastUpdate, 0.4 }, // 40% weight to last processing speed 
+            { rates.Rate1Min, 0.3 },   // 60% weight to 1-minute rate
+            { rates.Rate5Min, 0.2 },   // 30% weight to 5-minute rate
+            { rates.Rate15Min, 0.1 }   // 10% weight to 15-minute rate
+        }; 
+        
+```
+
+### 2. Optimization. Batch Operations.
+Idea: Read and Write operations in batches to protect our Redis instance.
