@@ -3,7 +3,7 @@
 <img width="803" height="652" alt="image" src="https://github.com/user-attachments/assets/dcc80adf-7bf6-44a4-9086-ebe4df4a67fe" />
 
 
-### Option 1. Redis and SortedSets
+### Option 1. Redis and SortedSets. Volative Storage usage to organize the Queue.
 Redis Sorted Sets use Skip Lists + Hash Table, not Red-Black Trees as you might think.
 
 Complexity Summary
@@ -24,7 +24,7 @@ Complexity Summary
 ```
 
 #### How Skip List is working
-https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Skip_list_add_element-en.gif/960px-Skip_list_add_element-en.gif
+![Alt Text](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Skip_list_add_element-en.gif/960px-Skip_list_add_element-en.gif)
 
 Basic Queue Code:  
 ```csharp
