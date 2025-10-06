@@ -4,6 +4,7 @@
 * [Azure Solution Architecture](#-azure-cloud)
 * [TOGAF Enterprise Architecture](#-enterprise-architecture-togaf)
 * [Solution and System Design examples. High and Low Level Design. Examples. NFR & Trade-offs](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice)
+* [Proved Cloud Architecture Patterns](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/system-design-patterns/proved-distributed-system-design-patterns.md)  
 * [Complex Data Structures In Depth](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/tree/main/complex-data-structures-in-depth)
 * [ATAM. Architecture Trade-off Analysis Management](#architecture-atam-principles)
 * [Architecture. Patterns. General.](#architecture-patterns)
