@@ -122,6 +122,7 @@
     e. [Web Chat](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/blob/main/System%20Design%20Interview%20%26%20Architecture%20in%20Practice/chat.md)  
     f. [Typeahead. Trie. Autocomplete](/System%20Design%20Interview%20&%20Architecture%20in%20Practice/TypeAhead_Trie_Autocomplete.md)  
     g. [Youtube. Hulu. Netflix](/System%20Design%20Interview%20%26%20Architecture%20in%20Practice/Youtube-Netflix-Hulu.md)  
+    h. [Reddit Views Counter. HyperLogLog](/System%20Design%20Interview%20%26%20Architecture%20in%20Practice/Reddit_Views_Counter_HyperLogLog.md)  
      
 3. [CAP Theorem. PACELC](#cap-themorem-pacelc-theorem-examples)
 4. [Consistent Hashing for Data Replication and Data Partitioning](#consistent-hashing-data-partitioning-data-replication)
