@@ -161,6 +161,83 @@ where:
 
 Standard error: **1.04 / √m ≈ 0.81%** for m = 16,384.
 
+### Deep Dive: Why This Actually Works
+
+#### What exactly is stored in a bucket?
+
+Not a user. Not a counter. Each bucket holds a single small number: **the longest streak of leading zeros** ever seen from any user that hashed into that bucket.
+
+```
+User "alex_123" hashes → bucket #6321, remaining bits: 00010101... → 3 leading zeros → rank = 4
+User "jane_456" hashes → bucket #6321, remaining bits: 10001100... → 0 leading zeros → rank = 1
+User "bob_789"  hashes → bucket #6321, remaining bits: 00000001... → 7 leading zeros → rank = 8
+
+bucket #6321 stores: max(4, 1, 8) = 8
+```
+
+Three users visited, but the bucket only remembers `8` — the best streak. The users themselves are gone. If "alex_123" visits again, the same hash produces the same rank (4), and `max(8, 4) = 8` — nothing changes. That's free deduplication.
+
+#### Why leading zeros tell us how many users visited
+
+A good hash function (xxhash64) distributes output bits **uniformly at random** — each bit is 0 or 1 with 50/50 chance, like a coin flip. Leading zeros are consecutive heads:
+
+| Leading zeros | Probability | You'd need ~N random tries to see it |
+|---|---|---|
+| 0 | 1 in 2 | ~2 |
+| 1 | 1 in 4 | ~4 |
+| 2 | 1 in 8 | ~8 |
+| 5 | 1 in 32 | ~32 |
+| 10 | 1 in 1,024 | ~1,000 |
+| 20 | 1 in 1,048,576 | ~1,000,000 |
+
+Because the hash distributes users evenly across buckets, each bucket gets a roughly equal share of the traffic. Within a single bucket, we're relying purely on probability: the highest rank we've ever seen is a statistical indicator of how many distinct users passed through that bucket. If the max rank is 10, probability says it took about ~1,024 distinct users to produce that streak. If it's 20 — about ~1 million.
+
+This is an **inference**, not a fact. One lucky user could produce 20 leading zeros on the first try. That's where the multi-bucket design comes in — we don't trust any single bucket's estimate.
+
+#### How the harmonic mean handles outliers (and why not arithmetic mean)
+
+The whole point of having **16,384 buckets** is to detect and neutralize the case when a single user's hash accidentally looks like "a million visitors." The hash distributes users evenly, so with enough real users, many buckets independently accumulate high ranks. But one lucky user only inflates **one** bucket — the other 16,383 remain at zero, exposing the anomaly.
+
+**The problem:** what if one unlucky bucket has a misleadingly high rank?
+
+```
+Only 1 user visited the post total.
+They hash into bucket #6321, and by pure luck get 20 leading zeros.
+
+bucket #0:    0  (empty)
+bucket #1:    0  (empty)
+...
+bucket #6321: 20 (one lucky user)
+...
+bucket #16383: 0  (empty)
+```
+
+**Arithmetic mean** would average that 20 across 16,384 buckets — still small, but biased upward. With multiple outliers it gets worse. Arithmetic mean is too sensitive to high values.
+
+**Median** would return 0 (the majority value). Robust to outliers, but throws away too much information — it can't distinguish 100 users from 10,000 if most buckets are still empty.
+
+**Harmonic mean** = `n / (1/x₁ + 1/x₂ + ... + 1/xₙ)` — it's naturally pulled toward the **smaller** values. One inflated bucket barely moves the result, because `1/big_number` is tiny. But when **thousands** of buckets independently show high ranks, the harmonic mean can't ignore it — that pattern means real users.
+
+| Scenario | Arithmetic mean | Harmonic mean |
+|---|---|---|
+| 1 user, lucky hash (one bucket = 20, rest = 0) | Inflated | ~1 ✅ |
+| 1M real users (thousands of buckets show high ranks) | ~correct | ~correct ✅ |
+| 10 users, a couple of lucky hashes | Overestimates | Stays close ✅ |
+
+This is why harmonic mean is the right tool — not sum, not average, not median.
+
+#### Why the result is probabilistic (and not exact)
+
+Three sources of imprecision make HyperLogLog an **estimator**, not a counter:
+
+**1. Information loss by design.** We throw away the user ID after hashing. We only keep the max rank per bucket. If 1,000 users hash into one bucket, we store one number — there's no way to recover the exact count.
+
+**2. Hash collisions across buckets.** Two different users might land in the same bucket with the same rank. From the bucket's perspective, it looks like one user. The more buckets we have, the less this matters — 16,384 buckets keeps collision probability low.
+
+**3. Statistical inference from random bits.** "Max leading zeros = 10 implies ~1,024 users" is a **probabilistic statement**. Maybe only 500 users visited but one got lucky. Maybe 2,000 visited but none hit a long streak. Across 16,384 buckets these fluctuations average out — but never perfectly.
+
+The result: **~0.81% standard error**. For 1 million actual unique visitors, HLL reports somewhere between ~991,900 and ~1,008,100. For a view counter, that's more than good enough — and it cost 12 KB instead of 8 GB.
+
 ## Redis Implementation
 
 Redis has HyperLogLog built-in via `PFADD` and `PFCOUNT` commands (the "PF" stands for **Philippe Flajolet**, inventor of the algorithm).
