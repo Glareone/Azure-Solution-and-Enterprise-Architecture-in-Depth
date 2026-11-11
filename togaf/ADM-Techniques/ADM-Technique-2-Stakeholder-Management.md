@@ -9,4 +9,4 @@
    - And it's also being able to read the room, understand what the problems are.
    - Found the conflicts earlier in order to be able to navigate those and not be tricked.
    - Power of individuals and the level of their interest (high interest means the level of decision making) in your project:
-![image](https://github.com/Glareone/AZ-304-305-SA-And-Architecture-Design-In-Depth/assets/4239376/9760fbb8-aafc-4921-909e-d8c506bf22f3)
+![image](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/assets/4239376/9760fbb8-aafc-4921-909e-d8c506bf22f3)
