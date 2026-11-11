@@ -24,7 +24,7 @@ if [ "${1:-}" = "--one" ]; then
       --skill "$skill" \
       "Use the fleet-worker skill. Item id: $id. The item:
 
-$(cat "$item")" ) >>"$log" 2>&1
+$(cat "$item")" </dev/null ) >>"$log" 2>&1   # </dev/null: pi -p waits for stdin EOF otherwise
   code=$?
   set -e
   echo "pi-exit: $code" >>"$log"

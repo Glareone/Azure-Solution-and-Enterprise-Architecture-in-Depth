@@ -53,8 +53,9 @@ $ready | ForEach-Object -ThrottleLimit $Max -Parallel {
     Write-Host "start $id"
     $prompt = "Use the fleet-worker skill. Item id: $id. The item:`n`n" + (Get-Content $item -Raw)
     Push-Location $dir
+    # pi -p reads piped stdin and waits for EOF: pipe in nothing so stdin is closed.
     try {
-        & pi -p --no-session --model $using:model --thinking $using:thinking --skill $skill $prompt *>> $log
+        $null | & pi -p --no-session --model $using:model --thinking $using:thinking --skill $skill $prompt *>> $log
         $code = $LASTEXITCODE
     } finally { Pop-Location }
     Add-Content -Path $log -Value "pi-exit: $code"
