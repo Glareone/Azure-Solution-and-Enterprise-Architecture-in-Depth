@@ -1,5 +1,5 @@
 # Phase without Letter. Requirements Management
-![image](https://github.com/Glareone/AZ-304-305-SA-And-Architecture-Design-In-Depth/assets/4239376/3be0e4d6-5736-441c-82ba-b1be984e5e3c)
+![image](https://github.com/Glareone/Azure-Solution-and-Enterprise-Architecture-in-Depth/assets/4239376/3be0e4d6-5736-441c-82ba-b1be984e5e3c)
 
 ## Objective (Purpose)
 Technically it's a phase, but it's not something that has a specific start and end.  
